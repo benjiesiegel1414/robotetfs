@@ -27,15 +27,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Check source files
+        id: ready
+        run: |
+          for f in scripts/build.mjs data/funds.csv content/funds.json assets/site.css assets/app.js; do [ -f "$f" ] || { echo "Missing $f, skipping build"; echo "ok=false" >> "$GITHUB_OUTPUT"; exit 0; }; done
+          echo "ok=true" >> "$GITHUB_OUTPUT"
       - name: Pull the latest fund data from the Google Sheet
+        if: steps.ready.outputs.ok == 'true'
         run: |
           SHEET=$(grep -oE '^const SHEET="[^"]*"' scripts/build.mjs | sed -E 's/^const SHEET="(.*)"/\1/')
           if [ -z "$SHEET" ]; then echo "No sheet URL set, using data/funds.csv"; exit 0; fi
           curl -sSL --retry 3 -m 60 "$SHEET" -o /tmp/funds.csv || exit 0
           if head -1 /tmp/funds.csv | grep -qi 'ticker\|symbol'; then mv /tmp/funds.csv data/funds.csv; echo "updated funds.csv"; else echo "::warning::sheet did not return CSV, keeping previous snapshot"; fi
       - name: Build site
+        if: steps.ready.outputs.ok == 'true'
         run: node scripts/build.mjs
       - name: Commit
+        if: steps.ready.outputs.ok == 'true'
         run: |
           git config user.name "robotetfs-bot"
           git config user.email "actions@users.noreply.github.com"
