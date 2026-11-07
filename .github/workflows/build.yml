@@ -42,6 +42,10 @@ jobs:
       - name: Build site
         if: steps.ready.outputs.ok == 'true'
         run: node scripts/build.mjs
+      - name: Render social card
+        if: steps.ready.outputs.ok == 'true' && hashFiles('robotetfs.png') == ''
+        run: |
+          google-chrome --headless=new --disable-gpu --hide-scrollbars --virtual-time-budget=5000 --window-size=1200,628 --screenshot="$PWD/robotetfs.png" "file://$PWD/scripts/og-card.html" || echo "::warning::social card render failed"
       - name: Commit
         if: steps.ready.outputs.ok == 'true'
         run: |
