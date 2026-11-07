@@ -104,3 +104,14 @@ footer{background:linear-gradient(180deg,#E3E6E8,#D3D8DB);padding:40px 0 30px;co
  .pnav{grid-template-columns:1fr}.pnav a:last-child{text-align:left}
 }
 section{scroll-margin-top:76px}
+/* snapshot ticker tape */
+.tape{overflow:hidden;background:#1F2B25;border-top:1px solid #2F4F3A}
+.tape-in{display:flex;width:max-content;animation:tape 70s linear infinite}
+.tape-set{display:flex}
+.tape:hover .tape-in,.tape:focus-within .tape-in{animation-play-state:paused}
+.tape a{display:flex;gap:8px;align-items:baseline;padding:12px 16px;color:#C9D2CC;text-decoration:none;font-family:var(--mono);font-size:13px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.08)}
+.tape a:hover{background:rgba(255,255,255,.06)}
+.tape b{color:#9BE3A8;font-weight:700}
+.tape em{font-style:normal;color:#E6D3A8}
+@keyframes tape{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.tape-in{animation-duration:240s}}
