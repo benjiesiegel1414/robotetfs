@@ -67,7 +67,7 @@ const MARK=(id)=>`<a class="mark" href="/" aria-label="RobotETFs home">${BOT(40,
 const NETWORK=[["TopETFs","topetfs.com"],["TopDividendETFs","topdividendetfs.com"],["TopDividendETFsPRO","topdividendetfspro.com"],["WeeklyETFs","weeklyetfs.com"],["MonthlyETFs","monthlyetfs.com"],["GrowthETFs","growthetfs.com"],["PhotonicsETFs","photonicsetfs.com"],["ETFTotalReturns","etftotalreturns.com"],["TopDividendTools","topdividendtools.com"],["DividendProjection","dividendprojection.com"]];
 const NAV=[["All ETFs","/#rankings"],["Humanoid","/humanoid-robot-etfs"],["Compare","/compare/"],["Guides","/blog"],["About","/about"],["Advertise","/advertise"]];
 const OG=SITE+"/robotetfs.png";
-function head({title,desc,canonical,type="website",ld,faq,extra=""}){
+function head({title,desc,canonical,type="website",ld,faq,extra="",og=OG}){
   const t=esc(title),d=esc(desc);
   return `<!DOCTYPE html>
 <html lang="en">
@@ -84,14 +84,14 @@ function head({title,desc,canonical,type="website",ld,faq,extra=""}){
 <meta property="og:description" content="${d}">
 <meta property="og:type" content="${type}">
 <meta property="og:url" content="${SITE}${canonical}">
-<meta property="og:image" content="${OG}">
+<meta property="og:image" content="${og}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="628">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@DevotedDividend">
 <meta name="twitter:title" content="${t}">
 <meta name="twitter:description" content="${d}">
-<meta name="twitter:image" content="${OG}">
+<meta name="twitter:image" content="${og}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -194,14 +194,14 @@ for(const a of ARTICLES){
   a.html=tokens(a.body);
   const toc=[];let hi=0;a.html=a.html.replace(/<h2>([\s\S]*?)<\/h2>/g,(m,t)=>{const id="s"+(++hi)+"-"+t.replace(/<[^>]+>/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40);toc.push([id,t.replace(/<[^>]+>/g,"")]);return `<h2 id="${id}">${t}</h2>`;});
   const words=a.html.replace(/<[^>]+>/g," ").split(/\s+/).filter(Boolean).length;a.mins=Math.max(3,Math.round(words/230));
-  const pre=`${heroArt(a)}${a.takeaways?`<div class="takeaways"><h2 class="tk-h">Key takeaways</h2><ul>${a.takeaways.map(t=>`<li>${tokens(t)}</li>`).join("")}</ul></div>`:""}${toc.length>3?`<nav class="toc" aria-label="On this page"><b>On this page</b><ol>${toc.map(([id,t])=>`<li><a href="#${id}">${t}</a></li>`).join("")}</ol></nav>`:""}`;
+  const pre=`${a.image?`<figure class="hero-photo"><img src="/images/guides/${a.slug}.jpg" width="1600" height="893" alt="${esc(a.imageAlt||a.title)}" fetchpriority="high"><figcaption>${esc(a.imageAlt||"")}${a.imageAlt?". ":""}AI-generated illustration.</figcaption></figure>`:heroArt(a)}${a.takeaways?`<div class="takeaways"><h2 class="tk-h">Key takeaways</h2><ul>${a.takeaways.map(t=>`<li>${tokens(t)}</li>`).join("")}</ul></div>`:""}${toc.length>3?`<nav class="toc" aria-label="On this page"><b>On this page</b><ol>${toc.map(([id,t])=>`<li><a href="#${id}">${t}</a></li>`).join("")}</ol></nav>`:""}`;
   const post=`${a.sources?`<section class="sources"><h2 class="h2">Sources and methodology</h2><p>Fund figures (assets, expense ratios, yields, launch dates) come from our RobotETFs data sheet, which we check against issuer materials and refresh daily. Always confirm the latest numbers with the issuer before investing.</p><ul>${a.sources.map(([l,u])=>`<li><a href="${esc(u)}" target="_blank" rel="noopener nofollow">${esc(l)}</a></li>`).join("")}</ul></section>`:""}<div class="author">${BOT(56,"ab"+a.slug.length)}<div><b>Written by Benjie Siegel</b><p>Founder of Dividend Empire and the RobotETFs network of ETF research sites. Benjie is a self-taught investor with more than ten years of experience researching and investing in ETFs, and shares his research with about 80K followers on X as @DevotedDividend.</p></div></div>`;
   a.html=pre+a.html+post;
   if(/\{\{/.test(a.html))throw new Error("Unresolved token in "+a.slug);
   if(/—|–/.test(a.html.replace(/<[^>]+>/g,"")))console.warn("Dash found in",a.slug);
   const more=ARTICLES.filter(x=>x!==a);
-  out[a.slug+".html"]=page({title:a.seo+" | RobotETFs",desc:a.dek,canonical:url,type:"article",active:a.nav||"/blog",faq:a.faq,
-    ld:{"@context":"https://schema.org","@type":"Article",headline:a.title,description:a.dek,datePublished:a.date,dateModified:NOW.toISOString().slice(0,10),author:{"@type":"Person",name:"Benjie Siegel"},publisher:{"@type":"Organization",name:"Dividend Empire LLC"},image:OG,mainEntityOfPage:SITE+url}},
+  out[a.slug+".html"]=page({og:a.image?SITE+"/images/guides/"+a.slug+"-og.jpg":OG,title:a.seo+" | RobotETFs",desc:a.dek,canonical:url,type:"article",active:a.nav||"/blog",faq:a.faq,
+    ld:{"@context":"https://schema.org","@type":"Article",headline:a.title,description:a.dek,datePublished:a.date,dateModified:NOW.toISOString().slice(0,10),author:{"@type":"Person",name:"Benjie Siegel"},publisher:{"@type":"Organization",name:"Dividend Empire LLC"},image:a.image?SITE+"/images/guides/"+a.slug+".jpg":OG,mainEntityOfPage:SITE+url}},
   `<div class="phead"><div class="wrap"><div class="crumbs"><a href="/">Home</a> / <a href="/blog">Guides</a></div><span class="badge">${esc(a.tag)}</span><h1>${esc(a.title)}</h1><p class="lede">${esc(a.dek)}</p><p class="byline">By Benjie Siegel &middot; Published ${fDateL(a.date)} &middot; Updated ${fDateL(NOW.toISOString().slice(0,10))} &middot; ${a.mins} min read</p></div></div>
 ${slot(advSlot)}
 <div class="wrap body"><div class="layout"><article><div class="prose">${a.html}</div>
