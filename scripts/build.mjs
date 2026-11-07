@@ -4,6 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import crypto from "node:crypto";
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const SITE="https://robotetfs.com";
 const GA_ID="G-1FZ0LNWJDL";   // GA4 measurement ID for RobotETFs (e.g. "G-XXXXXXX"). Leave blank to disable.
@@ -12,6 +13,7 @@ const EMAIL="Business@TopDividendETFs.com";
 const PRO="https://topdividendetfspro.com/";
 const NOW=new Date();
 const YEAR=NOW.getFullYear();
+const ASSETV=crypto.createHash("md5").update(fs.readFileSync(path.join(ROOT,"assets","site.css"))).update(fs.readFileSync(path.join(ROOT,"assets","app.js"))).digest("hex").slice(0,8);
 
 const FOCUS=[
  {id:"core robotics",c:"#4E7D57",bg:"#E6EFE7",label:"Core robotics",name:"Core robotics & automation",desc:"Industrial robots, automation systems, motion control and the software that runs factories and warehouses."},
@@ -94,7 +96,7 @@ function head({title,desc,canonical,type="website",ld,faq,extra=""}){
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=${ASSETV}">
 <script>document.documentElement.className+=" js";</script>
 ${GA_ID?`<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');</script>`:""}
 ${ld?`<script type="application/ld+json">${JSON.stringify(ld)}</script>`:""}
@@ -121,7 +123,7 @@ const foot=()=>`
 <div class="legal"><div class="top"><span>&copy; ${YEAR} Dividend Empire LLC</span><span>RobotETFs.com</span></div>${DISC}</div>
 </div></footer>
 <script>window.RB_FOCUS=${JSON.stringify(FOCUS.map(({id,c,bg,label,name})=>({id,c,bg,label,name})))};</script>
-<script src="/assets/app.js" defer></script>
+<script src="/assets/app.js?v=${ASSETV}" defer></script>
 </body>
 </html>`;
 const page=(o,body)=>head(o)+`\n<body>\n${top(o.active)}\n<main id="main">\n${body}\n</main>\n${foot()}`;
