@@ -148,6 +148,8 @@ function tokens(html){
    .replace(/\{\{count:([a-z &]+)\}\}/g,(m,id)=>String(COUNT(id)))
    .replace(/\{\{table\}\}/g,()=>`<div class="tbl">${fundTable(byAum)}</div>`)
    .replace(/\{\{table:([a-z &]+)\}\}/g,(m,id)=>`<div class="tbl">${fundTable(cat(id))}</div>`)
+   .replace(/\{\{table_by:(exp|inception|yld)(?::(\d+))?\}\}/g,(m,k,n)=>{const l=FUNDS.filter(f=>f[k]!=null&&f.focus!=="leveraged").sort((a,b)=>k==="exp"?a.exp-b.exp:k==="yld"?b.yld-a.yld:b.inception.localeCompare(a.inception));return `<div class="tbl">${fundTable(n?l.slice(0,+n):l)}</div>`;})
+   .replace(/\{\{table_of:([A-Z,]+)\}\}/g,(m,t)=>`<div class="tbl">${fundTable(t.split(",").map(x=>BY[x]).filter(Boolean))}</div>`)
    .replace(/\{\{list\}\}/g,()=>listOf(byAum))
    .replace(/\{\{list:([a-z &]+)\}\}/g,(m,id)=>listOf(cat(id)))
    .replace(/\{\{(link|aum|exp|yld|inc|name):([@A-Za-z.]+)\}\}/g,(m,k,t)=>{const f=res(t);if(!f)return t.startsWith("@")?"":"$"+t;return k==="link"?tlink(f):k==="aum"?live(f,"aum",fAum):k==="exp"?live(f,"exp",fExp):k==="yld"?live(f,"yld",fYld):k==="inc"?fDateL(f.inception):esc(f.name);});
