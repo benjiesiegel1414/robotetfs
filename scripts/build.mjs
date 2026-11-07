@@ -196,7 +196,8 @@ out["index.html"]=page({title:`Robotics ETFs ${YEAR}: Every Robot and Humanoid E
 <div class="hstats"><div><b>${FUNDS.length}</b><span>Robotics ETFs</span></div><div><b>${fAum(TOTAL)}</b><span>Combined AUM</span></div><div><b>${fExp(AVGEXP)}</b><span>Avg. expense</span></div></div>
 </div>
 <div class="snap"><div class="snaphead">${BOT(54,"ms")}<div><b>Robotics ETF snapshot</b><span>As of ${fDate(NOW.toISOString().slice(0,10))}</span></div></div>
-${snap.map(([l,f,k,fm])=>`<a class="srow" href="/etf/${f.slug}"><span class="k">${l}</span><span class="t">$${f.ticker}</span><span class="v">${k?live(f,k,fm):fm(f)}</span></a>`).join("")}</div>
+${snap.map(([l,f,k,fm])=>`<a class="srow" href="/etf/${f.slug}"><span class="k">${l}</span><span class="t">$${f.ticker}</span><span class="v">${k?live(f,k,fm):fm(f)}</span></a>`).join("")}
+<div class="tape" aria-label="Every robotics ETF we track"><div class="tape-in">${[0,1].map(n=>`<div class="tape-set"${n?' aria-hidden="true"':""}>${byAum.map(f=>`<a href="/etf/${f.slug}"${n?' tabindex="-1"':""}><b>$${f.ticker}</b><span>${fAum(f.aum)}</span><em>${f.yld?fYld(f.yld)+" yld":fExp(f.exp)+" fee"}</em></a>`).join("")}</div>`).join("")}</div></div></div>
 </div></div></div>
 ${slot(advSlot)}
 <section id="rankings"><div class="wrap">
