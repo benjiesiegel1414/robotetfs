@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import crypto from "node:crypto";
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"..");
 const SITE="https://robotetfs.com";
-const GA_ID="G-1FZ0LNWJDL";   // GA4 measurement ID for RobotETFs (e.g. "G-XXXXXXX"). Leave blank to disable.
+const GA_ID="G-PQJN03K789";   // GA4 measurement ID for RobotETFs (e.g. "G-XXXXXXX"). Leave blank to disable.
 const SHEET="";   // Published Google Sheet CSV URL (File > Share > Publish to web > CSV). The workflow pulls it daily.
 const EMAIL="Business@TopDividendETFs.com";
 const PRO="https://topdividendetfspro.com/";
