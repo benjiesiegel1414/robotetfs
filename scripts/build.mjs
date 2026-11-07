@@ -140,6 +140,38 @@ const out={};
 const artDir=path.join(ROOT,"content","articles");
 const ARTICLES=fs.readdirSync(artDir).filter(f=>f.endsWith(".html")).map(f=>{const r=fs.readFileSync(path.join(artDir,f),"utf8");const m=r.match(/^<!--meta\s*([\s\S]*?)-->/);if(!m)throw new Error("No meta in "+f);const meta=JSON.parse(m[1]);meta.body=r.slice(m[0].length);meta.slug=f.replace(/\.html$/,"");return meta;}).sort((a,b)=>b.date.localeCompare(a.date)||a.slug.localeCompare(b.slug));
 function listOf(list){return list.map((f,i)=>`<h3>${i+1}. ${tlink(f)}: ${esc(f.name)}</h3><p><strong>${esc(f.issuer)}</strong>${f.prof&&f.prof.style?" &middot; "+esc(f.prof.style):""} &middot; ${live(f,"aum",fAum)} in assets &middot; ${live(f,"exp",fExp)} expense ratio &middot; launched ${fDateL(f.inception)||"n/a"}</p>${f.prof?`<p>${esc(f.prof.about)}</p><p><strong>Worth knowing:</strong> ${esc(f.prof.watch)}</p>`:""}<p><a href="/etf/${f.slug}">Full $${f.ticker} profile and live price &rarr;</a></p>`).join("");}
+
+/* ---------- article visuals ---------- */
+const nonLev=()=>FUNDS.filter(f=>f.focus!=="leveraged");
+function barChart({title,sub,rows,fmt,note}){
+  const W=720,rowH=32,lw=170,rw=96,bw=W-lw-rw,H=rows.length*rowH+12,mx=Math.max(...rows.map(r=>r.v||0))||1;
+  const g=rows.map((r,i)=>{const y=6+i*rowH,w=Math.max(3,(r.v||0)/mx*bw);const lab=r.href?`<a href="${r.href}"><text x="${lw-12}" y="${y+19}" text-anchor="end" class="cl${r.hl?" hl":""}">${esc(r.label)}</text></a>`:`<text x="${lw-12}" y="${y+19}" text-anchor="end" class="cl${r.hl?" hl":""}">${esc(r.label)}</text>`;
+    return `<g class="cr"><title>${esc(r.label)}: ${fmt(r.v)}</title><rect x="0" y="${y}" width="${W}" height="${rowH}" class="hit"/>${lab}<rect x="${lw}" y="${y+5}" width="${w.toFixed(1)}" height="20" rx="4" class="bar${r.hl?" hl":""}"/><text x="${(lw+w+8).toFixed(1)}" y="${y+19}" class="cv">${fmt(r.v)}</text></g>`;}).join("");
+  return `<figure class="chart"><figcaption><b>${title}</b>${sub?`<span>${sub}</span>`:""}</figcaption><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}. ${esc(rows.map(r=>r.label+" "+fmt(r.v)).join(", "))}">${g}</svg><p class="src">Source: RobotETFs fund data, updated ${fDateL(NOW.toISOString().slice(0,10))}. ${note||""}</p></figure>`;
+}
+const fundRows=(l,k,hl=[])=>l.map(f=>({label:"$"+f.ticker,href:"/etf/"+f.slug,v:f[k],hl:hl.includes(f.ticker)}));
+function chartToken(spec){
+  const [kind,arg,arg2]=spec.split(":");const hl=(arg2||"").split(",");
+  if(kind==="aum"){const n=+arg||15;return barChart({title:`Largest robotics ETFs by assets`,sub:`Top ${n} non-leveraged funds, assets under management`,rows:fundRows([...nonLev()].sort((a,b)=>(b.aum||0)-(a.aum||0)).slice(0,n),"aum",hl),fmt:fAum});}
+  if(kind==="exp"){const l=[...nonLev()].filter(f=>f.exp!=null).sort((a,b)=>a.exp-b.exp);return barChart({title:"Robotics ETF expense ratios, cheapest first",sub:`All ${l.length} non-leveraged funds, annual fee`,rows:fundRows(l,"exp",hl),fmt:fExp,note:`Average across all funds: ${fExp(AVGEXP)}.`});}
+  if(kind==="yld"){const n=+arg||12;const l=[...nonLev()].filter(f=>f.yld).sort((a,b)=>b.yld-a.yld).slice(0,n);return barChart({title:"Highest-yielding robotics ETFs",sub:"Trailing dividend yield, non-leveraged funds",rows:fundRows(l,"yld",hl),fmt:fYld});}
+  if(kind==="cats"){return barChart({title:"Robotics ETFs by category",sub:"Number of funds we track in each category",rows:FOCUS.map(f=>({label:f.label,v:COUNT(f.id)})),fmt:v=>v+(v===1?" fund":" funds")});}
+  if(kind==="catsaum"){return barChart({title:"Where the money sits",sub:"Combined assets by category",rows:FOCUS.map(f=>({label:f.label,v:FUNDS.filter(x=>x.focus===f.id).reduce((s,x)=>s+(x.aum||0),0)})).sort((a,b)=>b.v-a.v),fmt:fAum});}
+  if(kind==="launch"){const ys={};FUNDS.forEach(f=>{if(f.inception){const y=f.inception.slice(0,4);ys[y]=(ys[y]||0)+1;}});return barChart({title:"Robotics ETF launches by year",sub:"Funds on our list by the year they started trading",rows:Object.keys(ys).sort().map(y=>({label:y,v:ys[y],hl:+y>=2025})),fmt:v=>v+(v===1?" launch":" launches")});}
+  if(kind==="of"){const l=arg.split(",").map(t=>BY[t]).filter(Boolean);const k=arg2||"aum";const fm=k==="exp"?fExp:k==="yld"?fYld:fAum;const nm={aum:"Assets under management",exp:"Expense ratio",yld:"Dividend yield"}[k];return barChart({title:`${nm}: ${l.map(f=>"$"+f.ticker).join(" vs ")}`,rows:fundRows(l,k),fmt:fm});}
+  if(kind==="fees"){const fees=[0.35,AVGEXP,0.95];const yrs=+arg||20;return barChart({title:`What $10,000 grows to in ${yrs} years at different fees`,sub:"Illustration only: assumes a steady 7% yearly return before fees",rows:fees.map((f,i)=>({label:f.toFixed(2)+"% fee"+(i===1?" (avg)":""),v:Math.round(10000*Math.pow(1.07-f/100,yrs)),hl:i===0})),fmt:v=>"$"+v.toLocaleString("en-US"),note:"Hypothetical example, not a projection of any fund's returns."});}
+  throw new Error("Unknown chart "+spec);
+}
+function heroArt(a){
+  const lines=String(a.hero||a.tag).split("|");
+  const tick=byAum.slice(0,9).map((f,i)=>`<text x="${40+i*128}" y="356" class="ht">$${f.ticker}</text>`).join("");
+  const bot=BOT(10,"hb").replace(/<svg[^>]*>/,"").replace("</svg>","");
+  return `<figure class="hero-art"><svg viewBox="0 0 1200 400" role="img" aria-label="${esc(a.title)}"><defs><linearGradient id="hg${a.slug.length}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F2B25"/><stop offset="1" stop-color="#2F4F3A"/></linearGradient><pattern id="hgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="rgba(255,255,255,.06)"/></pattern></defs>
+<rect width="1200" height="400" fill="url(#hg${a.slug.length})"/><rect width="1200" height="400" fill="url(#hgrid)"/>
+<rect x="0" y="322" width="1200" height="78" fill="rgba(0,0,0,.25)"/>${tick}
+<text x="60" y="92" class="hk">${esc(a.tag).toUpperCase()}</text>${lines.map((l,i)=>`<text x="60" y="${172+i*76}" class="hh">${esc(l)}</text>`).join("")}
+<g transform="translate(860 40) scale(4.3)">${bot}</g></svg></figure>`;
+}
 function tokens(html){
   const res=t=>t.startsWith("@")?pick[t.slice(1)]:BY[t];
   const cat=id=>byAum.filter(f=>f.focus===id);
@@ -150,6 +182,7 @@ function tokens(html){
    .replace(/\{\{table:([a-z &]+)\}\}/g,(m,id)=>`<div class="tbl">${fundTable(cat(id))}</div>`)
    .replace(/\{\{table_by:(exp|inception|yld)(?::(\d+))?\}\}/g,(m,k,n)=>{const l=FUNDS.filter(f=>f[k]!=null&&f.focus!=="leveraged").sort((a,b)=>k==="exp"?a.exp-b.exp:k==="yld"?b.yld-a.yld:b.inception.localeCompare(a.inception));return `<div class="tbl">${fundTable(n?l.slice(0,+n):l)}</div>`;})
    .replace(/\{\{table_of:([A-Z,]+)\}\}/g,(m,t)=>`<div class="tbl">${fundTable(t.split(",").map(x=>BY[x]).filter(Boolean))}</div>`)
+   .replace(/\{\{chart:([a-z]+(?::[A-Za-z0-9,]*)?(?::[A-Za-z0-9,]*)?)\}\}/g,(m,sp)=>chartToken(sp))
    .replace(/\{\{list\}\}/g,()=>listOf(byAum))
    .replace(/\{\{list:([a-z &]+)\}\}/g,(m,id)=>listOf(cat(id)))
    .replace(/\{\{(link|aum|exp|yld|inc|name):([@A-Za-z.]+)\}\}/g,(m,k,t)=>{const f=res(t);if(!f)return t.startsWith("@")?"":"$"+t;return k==="link"?tlink(f):k==="aum"?live(f,"aum",fAum):k==="exp"?live(f,"exp",fExp):k==="yld"?live(f,"yld",fYld):k==="inc"?fDateL(f.inception):esc(f.name);});
@@ -159,12 +192,17 @@ function sideBoxes(skip){return `<div class="box"><h3>Robotics ETFs by size</h3>
 for(const a of ARTICLES){
   const url="/"+a.slug;
   a.html=tokens(a.body);
+  const toc=[];let hi=0;a.html=a.html.replace(/<h2>([\s\S]*?)<\/h2>/g,(m,t)=>{const id="s"+(++hi)+"-"+t.replace(/<[^>]+>/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40);toc.push([id,t.replace(/<[^>]+>/g,"")]);return `<h2 id="${id}">${t}</h2>`;});
+  const words=a.html.replace(/<[^>]+>/g," ").split(/\s+/).filter(Boolean).length;a.mins=Math.max(3,Math.round(words/230));
+  const pre=`${heroArt(a)}${a.takeaways?`<div class="takeaways"><h2 class="tk-h">Key takeaways</h2><ul>${a.takeaways.map(t=>`<li>${tokens(t)}</li>`).join("")}</ul></div>`:""}${toc.length>3?`<nav class="toc" aria-label="On this page"><b>On this page</b><ol>${toc.map(([id,t])=>`<li><a href="#${id}">${t}</a></li>`).join("")}</ol></nav>`:""}`;
+  const post=`${a.sources?`<section class="sources"><h2 class="h2">Sources and methodology</h2><p>Fund figures (assets, expense ratios, yields, launch dates) come from our RobotETFs data sheet, which we check against issuer materials and refresh daily. Always confirm the latest numbers with the issuer before investing.</p><ul>${a.sources.map(([l,u])=>`<li><a href="${esc(u)}" target="_blank" rel="noopener nofollow">${esc(l)}</a></li>`).join("")}</ul></section>`:""}<div class="author">${BOT(56,"ab"+a.slug.length)}<div><b>Written by Benjie Siegel</b><p>Founder of Dividend Empire and the RobotETFs network of ETF research sites. Benjie is a self-taught investor with more than ten years of experience researching and investing in ETFs, and shares his research with about 80K followers on X as @DevotedDividend.</p></div></div>`;
+  a.html=pre+a.html+post;
   if(/\{\{/.test(a.html))throw new Error("Unresolved token in "+a.slug);
   if(/—|–/.test(a.html.replace(/<[^>]+>/g,"")))console.warn("Dash found in",a.slug);
   const more=ARTICLES.filter(x=>x!==a);
   out[a.slug+".html"]=page({title:a.seo+" | RobotETFs",desc:a.dek,canonical:url,type:"article",active:a.nav||"/blog",faq:a.faq,
     ld:{"@context":"https://schema.org","@type":"Article",headline:a.title,description:a.dek,datePublished:a.date,dateModified:NOW.toISOString().slice(0,10),author:{"@type":"Person",name:"Benjie Siegel"},publisher:{"@type":"Organization",name:"Dividend Empire LLC"},image:OG,mainEntityOfPage:SITE+url}},
-  `<div class="phead"><div class="wrap"><div class="crumbs"><a href="/">Home</a> / <a href="/blog">Guides</a></div><span class="badge">${esc(a.tag)}</span><h1>${esc(a.title)}</h1><p class="lede">${esc(a.dek)}</p><p class="byline">By Benjie Siegel &middot; ${fDateL(a.date)} &middot; Live data</p></div></div>
+  `<div class="phead"><div class="wrap"><div class="crumbs"><a href="/">Home</a> / <a href="/blog">Guides</a></div><span class="badge">${esc(a.tag)}</span><h1>${esc(a.title)}</h1><p class="lede">${esc(a.dek)}</p><p class="byline">By Benjie Siegel &middot; Published ${fDateL(a.date)} &middot; Updated ${fDateL(NOW.toISOString().slice(0,10))} &middot; ${a.mins} min read</p></div></div>
 ${slot(advSlot)}
 <div class="wrap body"><div class="layout"><article><div class="prose">${a.html}</div>
 ${a.faq?`<section class="faq"><h2 class="h2">Frequently asked questions</h2>${a.faq.map(([q,x])=>`<h3>${esc(q)}</h3><p>${esc(x)}</p>`).join("")}</section>`:""}
