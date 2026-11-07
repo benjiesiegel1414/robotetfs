@@ -1,0 +1,128 @@
+{
+"_note": "Plain-English profiles for each fund. Live numbers (AUM, fee, yield, inception) come from the Google Sheet. Keep these factual and update when a fund changes strategy.",
+"BOTZ": {
+"style": "Index",
+"about": "The largest and best-known robotics ETF. BOTZ tracks an index of companies that make industrial robots, automation systems, surgical robots and the AI software and chips behind them, with heavy weightings in the US and Japan.",
+"watch": "It is fairly concentrated, so a handful of large AI chip and automation names drive a big share of returns. Overlap with broad tech funds is meaningful."
+},
+"ROBO": {
+"style": "Index",
+"about": "The original robotics ETF, launched in 2013. ROBO tracks the ROBO Global Robotics and Automation Index, which spreads money across a wide mix of robotics, sensing, motion control and automation companies around the world.",
+"watch": "Its holdings are more equally spread than most peers, which means more small and mid-size companies. That diversifies the bet but also means it can lag when a few mega-cap AI names lead the market. It carries one of the higher fees in the group."
+},
+"KOID": {
+"style": "Index",
+"about": "KraneShares' humanoid robotics fund tracks companies building humanoid robots and the parts inside them: actuators, sensors, reducers, batteries and AI chips. It has grown into one of the largest dedicated humanoid ETFs.",
+"watch": "Humanoid robots are an early-stage market. Many holdings are component suppliers whose revenue today comes mostly from other businesses, and there is meaningful exposure to Chinese and other Asian companies."
+},
+"HUMN": {
+"style": "",
+"about": "Roundhill's humanoid robotics ETF targets companies directly involved in building humanoid robots and the key components that power them, from robot makers to motion and sensor suppliers.",
+"watch": "A fairly concentrated fund in a very young theme. Expect bigger swings than a broad robotics fund."
+},
+"BOTT": {
+"style": "Index",
+"about": "Themes ETFs' humanoid robotics fund offers low-cost index exposure to companies tied to humanoid robots, including robot makers and their hardware and AI suppliers.",
+"watch": "One of the cheapest funds on the list. It is still small, so check trading volume and bid-ask spreads before placing larger orders."
+},
+"IBOT": {
+"style": "Index",
+"about": "VanEck's robotics ETF tracks companies that earn a large share of revenue from robotics, including industrial and collaborative robots, the software that runs them and key enabling technologies.",
+"watch": "Its revenue-based screen keeps it closer to pure robotics names than broad AI funds. It is smaller than the category leaders."
+},
+"ARKQ": {
+"style": "Active",
+"about": "ARK's autonomous technology and robotics fund is an actively managed bet on autonomous vehicles, robotics, 3D printing, energy storage and space exploration, run in ARK's high-conviction style.",
+"watch": "Holdings are concentrated and can include large positions in a few names like electric vehicle and autonomy companies. It behaves more like a growth and disruption fund than a pure robotics index."
+},
+"FBOT": {
+"style": "Active",
+"about": "Fidelity's disruptive automation fund is actively managed and invests in companies that design and use robotics, automation and related technologies across industries.",
+"watch": "One of the few funds here that pays quarterly. As an active fund, its holdings can shift, so check the latest portfolio on Fidelity's site."
+},
+"RBTX": {
+"style": "Active",
+"about": "iShares' future robotics fund is an actively managed BlackRock ETF focused on companies driving robotics and related technologies, from robot makers to the components and software around them.",
+"watch": "Very new, so it has almost no track record yet. It comes from the largest ETF issuer in the world, which often helps a new fund gather assets."
+},
+"RTOO": {
+"style": "",
+"about": "VistaShares' robotics supercycle ETF targets companies positioned to benefit from a long build-out of robotics across manufacturing, logistics and consumer markets.",
+"watch": "Launched in 2026 and still small. New, small funds can have wider spreads and a higher risk of closing if they do not gather assets."
+},
+"TORK": {
+"style": "",
+"about": "KraneShares' actuator ETF focuses on one layer of the robot: the actuators, motors, reducers and motion parts that let robots move. It is a picks-and-shovels approach to robotics.",
+"watch": "A narrow and very new fund. Component suppliers often sell to many industries, so robotics may be only part of their revenue today."
+},
+"CBOT": {
+"style": "",
+"about": "Corgi's robots and humanoids ETF is a low-cost fund aimed at companies building robots and humanoid robots.",
+"watch": "Very small so far. Check liquidity and the current holdings on Corgi's site before buying."
+},
+"HOID": {
+"style": "",
+"about": "The Tuttle Capital and Rareview humanoid robotics ETF targets companies tied to the development of humanoid robots, from robot makers to their key suppliers.",
+"watch": "A brand-new fund with almost no history. Data such as AUM may be missing or delayed until it builds a record."
+},
+"CROB": {
+"style": "",
+"about": "Defiance's China robotics ETF focuses on Chinese companies building robots, humanoids and automation, a market that leads the world in industrial robot installations.",
+"watch": "Single-country exposure adds political, regulatory and currency risk on top of the robotics theme."
+},
+"AT": {
+"style": "",
+"about": "Defiance's robotics actuators ETF targets the companies that make actuators and motion components, the parts that turn power into precise robot movement.",
+"watch": "A narrow component-focused fund launched in 2026. Many holdings serve auto and industrial markets as well as robotics."
+},
+"WDRN": {
+"style": "",
+"about": "WisdomTree's physical AI fund covers AI that acts in the real world: humanoid robots, drones and the systems that power them.",
+"watch": "It mixes humanoids and drones, so it overlaps with both robotics and defense-tech funds. Still building assets."
+},
+"ROBT": {
+"style": "Index",
+"about": "First Trust's Nasdaq AI and robotics ETF tracks companies classified as AI and robotics enablers, engagers and enhancers, with a fairly equal-weighted approach.",
+"watch": "Its equal weighting spreads money across many mid-size names. That limits mega-cap concentration but can lag when the biggest AI stocks lead."
+},
+"PBOT": {
+"style": "",
+"about": "Pictet's AI and automation ETF brings the Swiss asset manager's thematic investing to US investors with a focus on AI-driven automation and robotics.",
+"watch": "A newer, smaller fund. Compare its holdings with broad AI ETFs to see how much is truly robotics."
+},
+"IQM": {
+"style": "Active",
+"about": "Franklin's intelligent machines ETF is an actively managed fund investing in companies behind intelligent machines: robotics, automation, sensors and the chips and software that power them.",
+"watch": "It often holds large positions in AI chip and semiconductor equipment names, so it can trade much like a tech growth fund. It pays little or no dividend."
+},
+"UBOT": {
+"style": "2X leveraged",
+"about": "Direxion's daily 2X robotics fund seeks twice the daily return of an index of robotics, AI and automation companies.",
+"watch": "Leveraged ETFs reset daily and are built for short-term trading. Over longer periods returns can drift far from 2X the index, especially in choppy markets."
+},
+"CABZ": {
+"style": "",
+"about": "Roundhill's robotaxi ETF targets companies building autonomous vehicles and robotaxi technology, from the vehicle platforms to the sensors and AI behind them.",
+"watch": "Self-driving is a narrow and early theme. A few large automakers and tech names can dominate results."
+},
+"DRNZ": {
+"style": "",
+"about": "REX's drone ETF focuses on companies building drones and unmanned systems for defense, commercial and consumer use.",
+"watch": "Drone makers are closely tied to defense budgets and contracts, which can move these stocks sharply."
+},
+"AIQ": {
+"style": "Index",
+"about": "Global X's AI and technology ETF is the largest fund on our list. It tracks companies developing and using AI, including the chip, cloud and software giants plus robotics and automation names.",
+"watch": "This is a broad AI fund rather than a pure robotics fund. It holds many of the same mega-cap tech stocks found in a Nasdaq index fund."
+},
+"THNQ": {
+"style": "Index",
+"about": "ROBO Global's AI ETF tracks companies across the AI value chain, from chips and cloud infrastructure to AI software and robotics applications.",
+"watch": "A companion fund to ROBO with more of a software and infrastructure tilt. Check overlap if you own both."
+},
+"LOUP": {
+"style": "Index",
+"about": "Innovator's Deepwater frontier tech ETF tracks a concentrated list of frontier technology companies chosen by Deepwater Asset Management, covering AI, robotics, autonomy, AR and VR.",
+"watch": "Concentrated and volatile. Robotics is one of several frontier themes inside it, not the only focus."
+}
+}
