@@ -1,0 +1,103 @@
+<!--meta
+{"title":"Leveraged Robotics ETFs: How UBOT Works and Why 2x Is Not 2x","short":"Leveraged robotics ETFs and UBOT","seo":"Leveraged Robotics ETFs 2026: UBOT Explained, Daily Reset, Decay and Risks","dek":"UBOT aims for twice the daily move of a robotics index. Over weeks and months the result can be very different from double. Here is how it works, with the math and a simulator you can run yourself.","date":"2026-11-21","tag":"Leveraged","hero":"Leveraged|robotics ETFs",
+"takeaways":["{{link:UBOT}} is the only leveraged robotics ETF on our list. It targets 2x the daily return of a robotics and AI index, holds {{aum:UBOT}} and charges {{exp:UBOT}}.","The 2x target applies to one day at a time. The fund rebalances every afternoon, so returns over longer periods compound and drift away from 2x.","In a choppy market that ends flat, a 2x daily fund loses money. With 2% daily swings over six months the drag is roughly 5%, before fees.","In a steady uptrend the same compounding can push returns above 2x. The drift is not always negative, but you cannot count on which way it goes.","The fee is about double the average robotics ETF, and the fund is built for short-term trading by people who watch their positions daily."],
+"sources":[["Direxion: UBOT fund page and prospectus","https://www.direxion.com/product/daily-robotics-artificial-intelligence-automation-index-bull-2x-etf"],["SEC Investor.gov: Updated Investor Bulletin on Leveraged and Inverse ETFs","https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/sec"],["SEC Investor.gov: Statement on Single-Stock Levered and/or Inverse ETFs","https://www.investor.gov/statement-single-stock"],["Global X: BOTZ fund page","https://www.globalxetfs.com/funds/botz/"]],
+"faq":[["Is there a leveraged robotics ETF?","Yes. UBOT, the Direxion Daily Robotics, Artificial Intelligence & Automation Index Bull 2X Shares, targets twice the daily return of a robotics and AI index."],["Is there a 3x robotics ETF?","Not on our list. UBOT targets 2x. Some single-stock leveraged ETFs exist for individual companies held by robotics funds, such as Tesla and Nvidia, but those are not robotics funds."],["Can I hold UBOT long term?","You can, but it is not designed for it. Because it resets daily, long-term results can differ sharply from twice the index, and losses in volatile markets are magnified. The SEC has warned buy-and-hold investors about this."],["Is there an inverse robotics ETF?","We do not track a dedicated inverse robotics ETF. Investors who want to bet against the theme generally use other tools, which carry their own substantial risks."],["Why is UBOT's dividend yield higher than other robotics ETFs?","Its distributions come mostly from interest on the cash and Treasury securities it holds as collateral for its swaps, not from robotics company dividends."],["What does UBOT hold?","Mainly swap contracts on its index and on a robotics ETF, plus cash and Treasury holdings as collateral. It does not need to own all the stocks in the index directly."]]}
+-->
+<p>Robotics stocks move a lot. Some traders want them to move more. That is the job of a leveraged ETF, and in robotics there is one fund that does it: {{link:UBOT}}, from Direxion.</p>
+<p>Leveraged funds are also some of the most misunderstood products in investing. The name says 2x, and many buyers reasonably assume that means double the return. It does, for exactly one day. This guide explains what happens after that, with worked examples and a simulator, so you know what you are holding. It is not a recommendation to buy or sell anything.</p>
+
+<h2>UBOT at a glance</h2>
+{{table_of:UBOT,BOTZ}}
+<p>{{link:UBOT}} launched on {{inc:UBOT}}. It targets twice the daily performance of the Indxx Global Robotics and Artificial Intelligence Thematic Index, which is the same index the unleveraged {{link:BOTZ}} follows. So the simplest way to think about UBOT is as a 2x daily version of BOTZ.</p>
+<p>It is much smaller than BOTZ, at {{aum:UBOT}} against {{aum:BOTZ}}, and it costs about twice as much: {{exp:UBOT}} a year against {{exp:BOTZ}}. The fund originally targeted 3x. Direxion lowered it to 2x in 2020, a reminder that an issuer can change a leveraged fund's design.</p>
+{{chart:of:UBOT,BOTZ:exp}}
+
+<h2>How a leveraged ETF gets its leverage</h2>
+<p>UBOT does not borrow money to buy twice as many robotics stocks. It uses swaps. A swap is a contract with a bank that pays the fund the return of the index on an agreed amount. By holding swaps worth about twice its assets, the fund gets 2x exposure.</p>
+<p>Behind those swaps the fund keeps cash and short-term Treasury securities as collateral. That collateral earns interest, which is why UBOT shows a yield of {{yld:UBOT}} even though robotics companies pay almost nothing. The yield is a side effect of the structure, not a reason to own the fund.</p>
+<p>The bank charges for providing the swap. That financing cost does not appear in the expense ratio, but it comes out of returns every day. When interest rates are higher, leverage costs more.</p>
+
+<h2>The daily reset, step by step</h2>
+<p>Here is the part that matters most. Every trading day, the fund adjusts its swap exposure so that it starts the next day at exactly 2x again.</p>
+<p>Say the fund has $100 of assets and $200 of exposure. The index rises 5%. The exposure gains $10, so assets are now $110 and exposure is $210. That is only 1.91x. To get back to 2x, the fund adds exposure, taking it to $220.</p>
+<p>Now say the index falls 5% instead. The exposure loses $10, so assets are $90 and exposure is $190. That is 2.11x. To get back to 2x, the fund cuts exposure to $180.</p>
+<p>Notice the pattern. After a gain, the fund buys more. After a loss, it sells. It is forced to buy high and sell low, every day, by design. In a market that trends steadily that works in your favor. In a market that bounces around, it grinds the fund down.</p>
+
+<h2>Three scenarios with real arithmetic</h2>
+<table class="cmp"><thead><tr><th>What the index does</th><th>Index result</th><th>2x daily fund</th><th>Simple 2x</th></tr></thead><tbody>
+<tr><td>Up 10%, then down 10%</td><td>-1.0%</td><td>-4.0%</td><td>-2.0%</td></tr>
+<tr><td>Down 10%, then up 10%</td><td>-1.0%</td><td>-4.0%</td><td>-2.0%</td></tr>
+<tr><td>Up 5% two days in a row</td><td>+10.3%</td><td>+21.0%</td><td>+20.5%</td></tr>
+<tr><td>Down 5% two days in a row</td><td>-9.8%</td><td>-19.0%</td><td>-19.5%</td></tr>
+<tr><td>Ten days alternating +3% and -3%</td><td>-0.4%</td><td>-1.8%</td><td>-0.9%</td></tr>
+</tbody></table>
+<p>These are arithmetic examples, not forecasts, and they leave out fees.</p>
+<p>Look at the first two rows. The order of the moves does not matter. A 10% rise and a 10% fall leave the index down 1%, and the leveraged fund down 4%, double what "2x" would suggest. Look at the middle rows. When the index moves in one direction, the leveraged fund does slightly better than 2x on the way up and loses slightly less than 2x on the way down. That is compounding helping.</p>
+<p>The lesson is that a leveraged fund's long-run return depends on the path, not only on where the index ends up.</p>
+
+<h2>Try it: the leverage simulator</h2>
+<p>The tool below models an index that alternates up and down days of a size you choose, while finishing at the total return you choose. Start with the defaults: a flat index, 2% daily swings, 126 trading days, which is about six months.</p>
+{{tool:lev}}
+<p>A few things to try:</p>
+<ul>
+<li><strong>Raise the daily swing to 3% or 4%.</strong> The loss on a flat index grows quickly. Drag rises with the square of volatility, so doubling the swings roughly quadruples the damage.</li>
+<li><strong>Set the index return to +30% with 1% swings.</strong> The 2x fund beats the simple 2x figure. Steady trends reward daily compounding.</li>
+<li><strong>Set the index return to -30%.</strong> The 2x fund loses less than 60%. It cannot lose more than everything, and compounding cushions a steady decline a little. That is small comfort.</li>
+<li><strong>Stretch the days to 252 or 504.</strong> The longer you hold through chop, the more the drift adds up.</li>
+</ul>
+<p>Robotics stocks are not calm. Daily moves of 2% to 3% in the index are common, and individual holdings swing far more. That is exactly the environment where daily-reset drag is largest.</p>
+
+<h2>The costs stack up</h2>
+<p>UBOT's {{exp:UBOT}} expense ratio is roughly double the {{avg_exp}} average across our list and the highest of any fund we track.</p>
+{{chart:exp::BOTZ}}
+<p>On top of that sit costs you do not see on the label:</p>
+<ul>
+<li><strong>Swap financing.</strong> The bank charges interest on the leveraged exposure.</li>
+<li><strong>Daily trading.</strong> Rebalancing every afternoon has transaction costs.</li>
+<li><strong>Bid-ask spread.</strong> With {{aum:UBOT}} in assets the fund is small, and the gap between buy and sell prices can be wider than on a large fund.</li>
+</ul>
+<p>The fee calculator shows the expense ratio alone, on an unleveraged basis. It is a floor for the real cost, not the whole of it.</p>
+{{tool:fee:UBOT}}
+
+<h2>Who leveraged ETFs are built for</h2>
+<p>Direxion says this plainly in its own materials, and the SEC has issued investor bulletins saying the same thing: leveraged ETFs are designed for short-term use by investors who understand the risks and monitor their positions.</p>
+<table class="cmp"><thead><tr><th>They are designed for</th><th>They are a poor fit for</th></tr></thead><tbody>
+<tr><td>Active traders with a view on the next day or few days</td><td>Buy-and-hold investors</td></tr>
+<tr><td>People who check positions daily</td><td>Retirement accounts you look at twice a year</td></tr>
+<tr><td>Traders who size positions small and use stops</td><td>Anyone who would be shaken by a 20% loss in a week</td></tr>
+<tr><td>Short-term hedging by professionals</td><td>Investors drawn by the dividend yield</td></tr>
+</tbody></table>
+<p>This is general education, not advice. Your broker may also require you to acknowledge specific risk disclosures before letting you trade leveraged products.</p>
+
+<h2>Common mistakes</h2>
+<h3>Assuming 2x over a year</h3>
+<p>If the index rises 20% in a year, a 2x daily fund will not reliably return 40%. Depending on how bumpy the ride was, it could return 45% or 25%. In a volatile year it could even be negative while the index is positive.</p>
+<h3>Averaging down</h3>
+<p>Buying more of a falling leveraged fund is especially dangerous. A fund that falls 50% needs to double to get back to even, and the daily reset means it will not simply retrace its path if the index recovers.</p>
+<h3>Ignoring it</h3>
+<p>Leverage magnifies whatever happens while you are not watching.</p>
+<h3>Confusing it with a single-stock leveraged fund</h3>
+<p>There are leveraged ETFs tied to individual companies that appear in robotics funds, such as Tesla and Nvidia. Those are bets on one stock, with even more concentrated risk. The SEC has issued a separate statement about them.</p>
+
+<h2>Alternatives if you want more robotics exposure</h2>
+<p>Traders use UBOT because they want amplified moves. Long-term investors who simply want more robotics in their portfolio have plainer options:</p>
+<ul>
+<li><strong>Own more of an unleveraged fund.</strong> A larger position in {{link:BOTZ}} or {{link:ROBO}} increases exposure with no daily reset and a much lower fee.</li>
+<li><strong>Choose a more concentrated fund.</strong> Funds such as {{link:HUMN}} or {{link:ROBX}} hold fewer, higher-conviction names. They are more volatile than a broad robotics fund without using leverage.</li>
+<li><strong>Add a higher-growth category.</strong> Humanoid and physical AI funds have moved more than core robotics funds in both directions.</li>
+</ul>
+{{table:core robotics}}
+
+<h2>How to read a leveraged fund's page</h2>
+<ol>
+<li><strong>Find the daily target.</strong> It should say "daily" somewhere near the multiple. If it does, everything in this guide applies.</li>
+<li><strong>Check the index.</strong> Know what is being multiplied. For UBOT it is the same index as BOTZ.</li>
+<li><strong>Look at the holdings.</strong> Expect swaps, cash and Treasury bills, not a list of robot companies.</li>
+<li><strong>Compare long-term returns with the index.</strong> The issuer's performance table usually shows both. The gap between the fund's return and twice the index return is the drift, in real life.</li>
+<li><strong>Read the risk section of the prospectus.</strong> It contains a table showing expected returns for different combinations of index return and volatility. It is the official version of the simulator above.</li>
+</ol>
+
+<h2>The bottom line</h2>
+<p>{{link:UBOT}} does what it promises: about twice the robotics index's move, each day. The trouble is the gap between that promise and what people assume it means over months. In a volatile theme like robotics, daily-reset drag and higher costs make it a poor substitute for simply owning more of an ordinary fund.</p>
+<p>If you trade it, keep the holding period short and the position small. If you are investing for years, look at the <a href="/core-robotics-etfs">core robotics ETFs</a> instead. See the full <a href="/etf/ubot">UBOT profile</a> or our guide to <a href="/robotics-etf-risks">robotics ETF risks</a>.</p>
