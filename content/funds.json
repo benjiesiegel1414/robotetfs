@@ -124,5 +124,30 @@
 "style": "Index",
 "about": "Innovator's Deepwater frontier tech ETF tracks a concentrated list of frontier technology companies chosen by Deepwater Asset Management, covering AI, robotics, autonomy, AR and VR.",
 "watch": "Concentrated and volatile. Robotics is one of several frontier themes inside it, not the only focus."
+},
+"ROBX": {
+"style": "Active",
+"about": "Amplify's robotics fund holds a concentrated basket of about 10 robotics companies from around the world. It leans on the Bloomberg Top 10 Momentum Robotics Index for ideas but is actively managed and does not track it, with Samsung Asset Management as sub-adviser.",
+"watch": "Ten stocks is very concentrated, so one bad holding can move the whole fund. It launched in August 2026 and is still tiny, which can mean wide bid-ask spreads. Use limit orders and check assets before buying."
+},
+"ARTY": {
+"style": "Index",
+"about": "The iShares Future AI & Tech ETF tracks the Morningstar Global Artificial Intelligence Select Index. It used to trade as IRBO, the iShares Robotics and AI fund, before its mandate changed in 2024. Today it is mostly AI chips, cloud and software, led by names such as AMD, Broadcom and TSMC.",
+"watch": "This is an AI fund now, not a robotics fund. Do not expect much industrial robot or humanoid exposure. We list it because many investors still look for it under its old robotics name."
+},
+"DRIV": {
+"style": "Index",
+"about": "The Global X Autonomous & Electric Vehicles ETF tracks the Solactive Autonomous & Electric Vehicles Index: about 75 companies that build self-driving and electric vehicles or the chips, software and materials behind them. Microsoft, Nvidia and Tesla have been among the largest positions.",
+"watch": "A big part of the fund is electric vehicles, batteries and large tech companies, so it is a broad way to own autonomy rather than a pure robotaxi bet. It overlaps with general tech funds."
+},
+"IDRV": {
+"style": "Index",
+"about": "The iShares Self-Driving EV and Tech ETF tracks the NYSE FactSet Global Autonomous Driving and Electric Vehicle Index. It holds about 70 automakers, battery makers and autonomous driving suppliers from around the world.",
+"watch": "Battery makers such as Samsung SDI and LG Energy Solution carry heavy weights, so the fund often trades with the electric vehicle cycle more than with self-driving news. It pays one of the higher yields on this list."
+},
+"JEDI": {
+"style": "Index",
+"about": "The Defiance Drone and Modern Warfare ETF tracks the BITA Drone & Modern Warfare Select Index. It holds about 48 drone makers, space and defense technology companies, with names such as Ondas, Redwire and Unusual Machines among the largest positions.",
+"watch": "This is as much a defense and space fund as a robotics fund, and it is concentrated: the top ten are about half the portfolio. Many holdings are small, unprofitable companies that swing hard. It carries one of the highest fees on the list."
 }
 }
